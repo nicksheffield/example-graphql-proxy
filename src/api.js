@@ -10,13 +10,11 @@ const api = axios.create({
 
 api.interceptors.request.use(
 	function (config) {
-		console.log('GET', config.url)
-		// Do something before request is sent
+		console.log('GET', config.url) // for logging what http requests get made
 		return config
 	},
 	function (error) {
-		// Do something with request error
-		return Promise.reject(error)
+		return error
 	}
 )
 

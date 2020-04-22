@@ -21,7 +21,7 @@ const server = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: integrationContext => {
-		return { authorization: integrationContext.req.headers.authorization }
+		return { config: { headers: { authorization: integrationContext.req.headers.authorization } } }
 	},
 })
 

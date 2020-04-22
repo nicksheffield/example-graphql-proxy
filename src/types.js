@@ -1,11 +1,6 @@
 import { gql } from 'apollo-server-express'
 
 const typeDefs = gql`
-	enum OrderDir {
-		ASC
-		DESC
-	}
-
 	type Query {
 		case(id: ID!): Case!
 		cases(pageNumber: Int!, pageSize: Int!, orderBy: CaseOrderByInput): CaseConnection
@@ -54,15 +49,9 @@ const typeDefs = gql`
 		node: Case
 	}
 
-	type CaseParty {
-		id: ID!
-		user: User
-		parties: [User]
-	}
-
 	type User {
 		id: ID!
-		fullName: String!
+		fullName: String! # this is fake, and the value is only supplied by a resolver
 		firstName: String!
 		middleName: String
 		lastName: String!
@@ -81,6 +70,12 @@ const typeDefs = gql`
 
 	type UserEdge {
 		node: User
+	}
+
+	type CaseParty {
+		id: ID!
+		user: User
+		parties: [User]
 	}
 
 	type Address {

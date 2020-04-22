@@ -1,6 +1,6 @@
 import api from '../api'
 
-export default async (_, { pageNumber, pageSize, orderBy }, { authorization }) => {
+export default async (_, { pageNumber, pageSize, orderBy }, { config }) => {
 	console.log('orderBy', orderBy)
 
 	let orderStr = ''
@@ -14,9 +14,7 @@ export default async (_, { pageNumber, pageSize, orderBy }, { authorization }) =
 			break
 	}
 
-	const res = await api.get(`/Cases?pageNumber=${pageNumber}&pageSize=${pageSize}${orderStr}`, {
-		headers: { authorization },
-	})
+	const res = await api.get(`/Cases?pageNumber=${pageNumber}&pageSize=${pageSize}${orderStr}`, config)
 
 	return {
 		edges: res.data.items.map(node => ({
