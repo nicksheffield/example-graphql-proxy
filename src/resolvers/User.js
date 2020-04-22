@@ -1,16 +1,14 @@
-import api from '../api'
-
 export default {
 	fullName: root => {
 		return [root.firstName, root.middleName, root.lastName].filter(x => x).join(' ')
 	},
-	physicalAddress: async (root, {}, { config }) => {
+	physicalAddress: async (root, {}, { dataSources: { RestAPI } }) => {
 		if (root.physicalAddress) {
 			return root.physicalAddress
 		} else {
-			const res = await api.get(`/Users/${root.id}`, config)
+			const res = await RestAPI.getUser(root.id)
 
-			return res.data.physicalAddress
+			return res.physicalAddress
 		}
 	},
 }

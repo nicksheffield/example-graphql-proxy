@@ -1,28 +1,13 @@
-import api from '../api'
-
-export default async (_, { pageNumber, pageSize, orderBy }, { config }) => {
-	console.log('orderBy', orderBy)
-
-	let orderStr = ''
-
-	switch (orderBy) {
-		case 'created_ASC':
-			orderStr = '&orderBy=created&orderDirection=1'
-			break
-		case 'created_DESC':
-			orderStr = '&orderBy=created&orderDirection=2'
-			break
-	}
-
-	const res = await api.get(`/Cases?pageNumber=${pageNumber}&pageSize=${pageSize}${orderStr}`, config)
+export default async (_, { pageNumber, pageSize, orderBy }, { dataSources: { RestAPI } }) => {
+	let res = await RestAPI.getCases(pageNumber, pageSize, orderBy)
 
 	return {
-		edges: res.data.items.map(node => ({
+		edges: res.items.map(node => ({
 			node,
 		})),
 		pageInfo: {
-			...res.data,
-			count: res.data.items.length,
+			...res,
+			count: res.items.length,
 		},
 	}
 }

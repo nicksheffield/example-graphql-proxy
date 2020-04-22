@@ -1,6 +1,7 @@
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './types'
+import RestAPI from './dataSource'
 
 import CaseQuery from './queries/CaseQuery'
 import CasesQuery from './queries/CasesQuery'
@@ -20,8 +21,13 @@ const resolvers = {
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
+	dataSources: () => {
+		return {
+			RestAPI: new RestAPI(),
+		}
+	},
 	context: integrationContext => {
-		return { config: { headers: { authorization: integrationContext.req.headers.authorization } } }
+		return { authorization: integrationContext.req.headers.authorization }
 	},
 })
 
