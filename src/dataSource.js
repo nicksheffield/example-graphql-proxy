@@ -8,7 +8,6 @@ class RestAPI extends RESTDataSource {
 	}
 
 	willSendRequest(request) {
-		console.log('will send request', request.path)
 		request.headers.set('Authorization', this.context.authorization)
 		request.headers.set('Registry', process.env.REGISTRY)
 	}
